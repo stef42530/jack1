@@ -1,0 +1,116 @@
+
+<!-- https://developers.google.com/chart/interactive/docs/gallery/map#styling-maps -->
+<!-- cet exemple fonctionne avec jsfiddle mais pas ici ????? -->
+ <!-- https://developers.google.com/chart/interactive/docs/gallery/map#loading -->
+ <!-- pb -->
+ <!-- http://stackoverflow.com/questions/38001708/missingkeymaperror-that-just-began-occurring-with-google-charts-displaymode -->
+ <!-- https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings -->
+    <!-- https://developers.google.com/chart/interactive/docs/release_notes  -->
+
+   <!-- var myMapsApiKey = 'AIzaSyBT46aHNOJDn0tHfX8bFFkdTkFq68LX8cc'; -->
+   <!-- google.charts.load('45', { packages: [ 'geochart','map'], mapsApiKey: myMapsApiKey  }); -->
+ <!-- google.charts.load('upcoming', {packages: ['map']}); -->
+       
+
+
+    
+    <html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages': ['table', 'map', 'corechart']});
+      google.charts.setOnLoadCallback(initialize);
+
+      function initialize() {
+        // The URL of the spreadsheet to source data from.
+        var query = new google.visualization.Query(
+            'https://spreadsheets.google.com/pub?key=pCQbetd-CptF0r8qmCOlZGg');
+        query.send(draw);
+      }
+
+      function draw(response) {
+        if (response.isError()) {
+          alert('Error in query');
+        }
+
+        var ticketsData = response.getDataTable();
+        var chart = new google.visualization.ColumnChart(
+            document.getElementById('chart_div'));
+        chart.draw(ticketsData, {'isStacked': true, 'legend': 'bottom',
+            'vAxis': {'title': 'Number of tickets'}});
+
+        var geoData = google.visualization.arrayToDataTable([
+          ['Lat', 'Lon', 'Name', 'Food?'],
+          [51.5072, -0.1275, 'Cinematics London', true],
+          [48.8567, 2.3508, 'Cinematics Paris', true],
+          [55.7500, 37.6167, 'Cinematics Moscow', false]]);
+
+        var geoView = new google.visualization.DataView(geoData);
+        geoView.setColumns([0, 1]);
+
+        var table =
+            new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(geoData, {showRowNumber: false, width: '100%', height: '100%'});
+
+        var map =
+            new google.visualization.Map(document.getElementById('map_div'));
+        map.draw(geoView, {showTip: true});
+
+        // Set a 'select' event listener for the table.
+        // When the table is selected, we set the selection on the map.
+        google.visualization.events.addListener(table, 'select',
+            function() {
+              map.setSelection(table.getSelection());
+            });
+
+        // Set a 'select' event listener for the map.
+        // When the map is selected, we set the selection on the table.
+        google.visualization.events.addListener(map, 'select',
+            function() {
+              table.setSelection(map.getSelection());
+            });
+      }
+    </script>
+  </head>
+</html>
+
+  <body> 
+  
+    <table align="center">
+      <tr valign="top">
+        <td style="width: 50%;">
+          <div id="map_div" style="width: 400px; height: 300;"></div>
+        </td>
+        <td style="width: 50%;">
+          <div id="table_div"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colSpan=2>
+          <div id="chart_div" style="align: center; width: 700px; height: 300px;"></div>
+        </td>
+      </tr>
+    </table>
+ <br/>
+   <a href="https://developers.google.com/chart/interactive/docs/examples#interaction_example">https://developers.google.com/chart/interactive/docs/examples#interaction_example</a>
+   <br/>
+ Full HTML Page Example  <br/>
+An end-to-end example for creating a web page with visualization charts embedded in it. <br/>
+   It also demonstrates a chart connected to Google Spreadsheets and two charts interacting using visualization Events.
+ <br/>
+The example displays a simple statistics page for popular movies and cinema locations of a make-belief cinema chain company.
+ <br/>
+The page includes a Map and a Table visualization that interact with each other to display the theater locations. 
+   <br/>
+   The page includes a column chart displaying the number of tickets each movie sold per location. 
+   <br/>It derives its data from a Google Spreadsheet. The published version of this spreadsheet can be viewed for completeness.  
+   <br/>
+   <span style="color: red;">
+ It works in jsfiddle....
+ <br/>
+   <script async src="//jsfiddle.net/stef42530/ssexnL62/embed/"></script>
+   <br/>
+    
+  </body>
+
+ 
