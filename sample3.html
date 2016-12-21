@@ -5,69 +5,92 @@
  <!-- pb -->
  <!-- http://stackoverflow.com/questions/38001708/missingkeymaperror-that-just-began-occurring-with-google-charts-displaymode -->
  <!-- https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings -->
- <html>
-<head>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
-   
+    <!-- https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings  -->
+
+   <!-- var myMapsApiKey = 'AIzaSyBT46aHNOJDn0tHfX8bFFkdTkFq68LX8cc'; -->
+   <!-- google.charts.load('45', { packages: [ 'geochart','map'], mapsApiKey: myMapsApiKey  }); -->
+ <!-- google.charts.load('upcoming', {packages: ['map']}); -->
+       
     
-    <!-- google.charts.load('upcoming', {packages: ['map']}); -->
-     <!-- https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings  -->
-    var myMapsApiKey = 'AIzaSyBT46aHNOJDn0tHfX8bFFkdTkFq68LX8cc';
-    google.charts.load('45', { packages: [ 'geochart','map'], mapsApiKey: myMapsApiKey  });
-    google.charts.setOnLoadCallback(drawMap);
-   
-   
+    <html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages': ['table', 'map', 'corechart']});
+      google.charts.setOnLoadCallback(initialize);
 
-    function drawMap () {
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Address');
-      data.addColumn('string', 'Location');
+      function initialize() {
+        // The URL of the spreadsheet to source data from.
+        var query = new google.visualization.Query(
+            'https://spreadsheets.google.com/pub?key=pCQbetd-CptF0r8qmCOlZGg');
+        query.send(draw);
+      }
 
-      data.addRows([
-        ['Lake Buena Vista, FL 32830, United States',                  'Walt Disney World'],
-        ['6000 Universal Boulevard, Orlando, FL 32819, United States', 'Universal Studios'],
-        ['7007 Sea World Drive, Orlando, FL 32821, United States',     'Seaworld Orlando' ]
-      ]);
+      function draw(response) {
+        if (response.isError()) {
+          alert('Error in query');
+        }
 
-      var options = {
-        mapType: 'styledMap',
-        zoomLevel: 12,
-        showTooltip: true,
-        showInfoWindow: true,
-        useMapTypeControl: true,
-        maps: {
-          // Your custom mapTypeId holding custom map styles.
-          styledMap: {
-            name: 'Styled Map', // This name will be displayed in the map type control.
-            styles: [
-              {featureType: 'poi.attraction',
-               stylers: [{color: '#fce8b2'}]
-              },
-              {featureType: 'road.highway',
-               stylers: [{hue: '#0277bd'}, {saturation: -50}]
-              },
-              {featureType: 'road.highway',
-               elementType: 'labels.icon',
-               stylers: [{hue: '#000'}, {saturation: 100}, {lightness: 50}]
-              },
-              {featureType: 'landscape',
-               stylers: [{hue: '#259b24'}, {saturation: 10}, {lightness: -22}]
-              }
-        ]}}
-      };
+        var ticketsData = response.getDataTable();
+        var chart = new google.visualization.ColumnChart(
+            document.getElementById('chart_div'));
+        chart.draw(ticketsData, {'isStacked': true, 'legend': 'bottom',
+            'vAxis': {'title': 'Number of tickets'}});
 
-      var map = new google.visualization.Map(document.getElementById('map_div'));
+        var geoData = google.visualization.arrayToDataTable([
+          ['Lat', 'Lon', 'Name', 'Food?'],
+          [51.5072, -0.1275, 'Cinematics London', true],
+          [48.8567, 2.3508, 'Cinematics Paris', true],
+          [55.7500, 37.6167, 'Cinematics Moscow', false]]);
 
-      map.draw(data, options);
-    }
-  </script>
-</head>
-<body>
-<div id="map_div" style="height: 500px; width: 900px"></div>
+        var geoView = new google.visualization.DataView(geoData);
+        geoView.setColumns([0, 1]);
+
+        var table =
+            new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(geoData, {showRowNumber: false, width: '100%', height: '100%'});
+
+        var map =
+            new google.visualization.Map(document.getElementById('map_div'));
+        map.draw(geoView, {showTip: true});
+
+        // Set a 'select' event listener for the table.
+        // When the table is selected, we set the selection on the map.
+        google.visualization.events.addListener(table, 'select',
+            function() {
+              map.setSelection(table.getSelection());
+            });
+
+        // Set a 'select' event listener for the map.
+        // When the map is selected, we set the selection on the table.
+        google.visualization.events.addListener(map, 'select',
+            function() {
+              table.setSelection(map.getSelection());
+            });
+      }
+    </script>
+  </head>
+
+  <body>
+    <table align="center">
+      <tr valign="top">
+        <td style="width: 50%;">
+          <div id="map_div" style="width: 400px; height: 300;"></div>
+        </td>
+        <td style="width: 50%;">
+          <div id="table_div"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colSpan=2>
+          <div id="chart_div" style="align: center; width: 700px; height: 300px;"></div>
+        </td>
+      </tr>
+    </table>
  <br/>
  It works in jsfiddle....
  <br/>
    <script async src="//jsfiddle.net/stef42530/ssexnL62/embed/"></script>
-</body>
-</html>
+  </body>
+
+ 
