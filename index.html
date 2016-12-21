@@ -10,7 +10,9 @@ another chart (organiza chart)
 
 <iframe width="600" height="143.5" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1pJ84l8Oou3oIPVA5xV61dCHF3tLPBlI8fc1P_FzLyIo/pubchart?oid=2107519757&amp;format=interactive"></iframe>
 
-  <br/> <br/>chart with animation <br/> <br/>
+  <br/> <br/>chart with animation <br/> 
+and design your point<br/>
+https://developers.google.com/chart/interactive/docs/points <br/> <br/>
 
 <head>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -34,7 +36,7 @@ another chart (organiza chart)
       var options = {
         legend: 'none',
         colors: ['#087037'],
-        pointShape: 'star',
+        pointShape: { type: 'star', sides: 5, dent: 0.1 },
         pointSize: 24,
         animation: {
           duration: 300,
@@ -59,8 +61,8 @@ another chart (organiza chart)
         y += 10 * (Math.random() - 0.5);
         if (x * x + y * y > radius * radius) {
           // Out of bounds. Bump toward center.
-          x += Math.random() * ((x < 0) ? 5 : -5);
-          y += Math.random() * ((y < 0) ? 5 : -5);
+          x += Math.random() * ((x < 0) ? 10 : -10);
+          y += Math.random() * ((y < 0) ? 10 : -10);
         }
         data.setValue(data.getNumberOfRows() - 1, 0, x);
         data.setValue(data.getNumberOfRows() - 1, 1, y);
