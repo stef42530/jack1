@@ -17,20 +17,16 @@ another chart (organiza chart)
 
  <br/> <br/>
 another chart (geochart) 
-
-  <br/> <br/>chart with animation (random walk) <br/> 
-
-<br/> <br/>
-<svg height="60" width="200">
-  <text x="0" y="15" fill="red" transform="rotate(18 20,40)">Other</text>
-  Sorry, your browser does not support inline SVG.
-</svg>
 <br/> <br/>
 A geochart is rendered within the browser using SVG or VML. Note that the geochart is not scrollable or draggable, and it's a line drawing rather than a terrain map; if you want any of that, consider a map visualization instead.
 <a href="https://developers.google.com/chart/interactive/docs/gallery/geochart">https://developers.google.com/chart/interactive/docs/gallery/geochart</a>
 <br/> <br/>
 <br/> <br/>
-another chart (geochart) 
+<br/> <br/>
+<svg height="60" width="200">
+  <text x="0" y="15" fill="red" transform="rotate(18 20,40)">Other chart</text>
+  Sorry, your browser does not support inline SVG.
+</svg>
 
   <br/> <br/>chart with animation (random walk) <br/> 
 
@@ -62,7 +58,7 @@ and design your point <br/>
       var options = {
         legend: 'none',
         colors: ['#087037'],
-        pointShape: 'star',
+        pointShape: { type: 'star', sides: 5, dent: 0.2 },
         pointSize: 18,
         animation: {
           duration: 200,
