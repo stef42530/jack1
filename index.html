@@ -15,6 +15,12 @@ another chart (organiza chart)
 
 <iframe width="600" height="143.5" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1pJ84l8Oou3oIPVA5xV61dCHF3tLPBlI8fc1P_FzLyIo/pubchart?oid=2107519757&amp;format=interactive"></iframe>
 
+<br/> <br/>
+<br/> <br/>
+<svg height="60" width="200">
+  <text x="0" y="15" fill="red" transform="rotate(18 20,40)">Other interesting examples without spreadsheet API</text>
+  Sorry, your browser does not support inline SVG.
+</svg>
  <br/> <br/>
 another chart (geochart) 
 <br/> <br/>
@@ -22,11 +28,44 @@ A geochart is rendered within the browser using SVG or VML. Note that the geocha
 <a href="https://developers.google.com/chart/interactive/docs/gallery/geochart">https://developers.google.com/chart/interactive/docs/gallery/geochart</a>
 <br/> <br/>
 <br/> <br/>
-<svg height="60" width="200">
-  <text x="0" y="15" fill="red" transform="rotate(18 20,40)">Other chart</text>
-  Sorry, your browser does not support inline SVG.
-</svg>
+A map (chart)<br/>
+<a href="https://developers.google.com/chart/interactive/docs/gallery/map">https://developers.google.com/chart/interactive/docs/gallery/map</a>
+<br/>The Google Map Chart displays a map using the Google Maps API. <br/>
+Data values are displayed as markers on the map. Data values can be coordinates (lat-long pairs) or addresses.<br/>
+The map will be scaled so that it includes all the identified points.<br/>
+If you want your maps to be line drawings rather than satellite imagery, use a geochart instead.<br/>
 
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("upcoming", {packages:["map"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Lat', 'Long', 'Name'],
+          [37.4232, -122.0853, 'Work'],
+          [37.4289, -122.1697, 'University'],
+          [37.6153, -122.3900, 'Airport'],
+          [37.4422, -122.1731, 'Shopping']
+        ]);
+
+        var map = new google.visualization.Map(document.getElementById('map_div'));
+        map.draw(data, {
+          showTooltip: true,
+          showInfoWindow: true
+        });
+      }
+
+    </script>
+  </head>
+
+  <body>
+    <div id="map_div" style="width: 400px; height: 300px"></div>
+  </body>
+</html>
+
+<br/> <br/>
   <br/> chart with animation (random walk) <br/> 
 
  <a href="https://developers.google.com/chart/interactive/docs/gallery/scatterchart">https://developers.google.com/chart/interactive/docs/gallery/scatterchart</a>
