@@ -1,4 +1,10 @@
+Our gallery provides a variety of charts designed to address your data visualization needs. 
+These charts are based on pure HTML5/SVG technology (adopting VML for old IE versions), 
+so no plugins are required. All of them are interactive, and many are pannable and zoomable.
+<a href="https://developers.google.com/chart/interactive/docs/gallery">https://developers.google.com/chart/interactive/docs/gallery</a>
 
+
+<br/>  <br/>
  a chart (view type= Table) from a googleSheet 
 <br/>  <br/>
 
@@ -10,9 +16,50 @@ another chart (organiza chart)
 
 <iframe width="600" height="143.5" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1pJ84l8Oou3oIPVA5xV61dCHF3tLPBlI8fc1P_FzLyIo/pubchart?oid=2107519757&amp;format=interactive"></iframe>
 
-  <br/> <br/>chart with animation <br/> 
-and design your point<br/>
-https://developers.google.com/chart/interactive/docs/points <br/> <br/>
+<br/> <br/>
+another chart (geochart) 
+<br/> <br/>
+
+A geochart is rendered within the browser using SVG or VML. Note that the geochart is not scrollable or draggable, and it's a line drawing rather than a terrain map; if you want any of that, consider a map visualization instead.
+<a href="https://developers.google.com/chart/interactive/docs/gallery/geochart">https://developers.google.com/chart/interactive/docs/gallery/geochart</a>
+<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script type='text/javascript'>
+     google.charts.load('upcoming', {'packages': ['geochart']});
+     google.charts.setOnLoadCallback(drawMarkersMap);
+
+      function drawMarkersMap() {
+      var data = google.visualization.arrayToDataTable([
+        ['City',   'Population', 'Area'],
+        ['Rome',      2761477,    1285.31],
+        ['Milan',     1324110,    181.76],
+        ['Naples',    959574,     117.27],
+        ['Turin',     907563,     130.17],
+        ['Palermo',   655875,     158.9],
+        ['Genoa',     607906,     243.60],
+        ['Bologna',   380181,     140.7],
+        ['Florence',  371282,     102.41],
+        ['Fiumicino', 67370,      213.44],
+        ['Anzio',     52192,      43.43],
+        ['Ciampino',  38262,      11]
+      ]);
+
+      var options = {
+        region: 'IT',
+        displayMode: 'markers',
+        colorAxis: {colors: ['green', 'blue']}
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    };
+    </script>
+
+
+  <br/> <br/>chart with animation (random walk) <br/> 
+and design your point: <br/>
+ <br/> <br/>
+<a href="https://developers.google.com/chart/interactive/docs/points">https://developers.google.com/chart/interactive/docs/points</a>
 
 <head>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
