@@ -6,10 +6,8 @@
     <!-- https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings -->
     
     <script type="text/javascript">
-      google.charts.load('current', {'packages': ['table', 'corechart']});
-      
       var myMapsApiKey = 'AIzaSyBT46aHNOJDn0tHfX8bFFkdTkFq68LX8cc';
-      google.charts.load('upcoming', { 'packages' : ['geochart', 'map'], mapsApiKey: myMapsApiKey });
+      google.charts.load('current', {'packages': ['table', 'corechart','geochart', 'map'], mapsApiKey: myMapsApiKey});
       
       google.charts.setOnLoadCallback(initialize);
 
