@@ -1,6 +1,6 @@
 
 <!-- https://developers.google.com/chart/interactive/docs/gallery/map#styling-maps -->
-<!-- cet exemple fonctionne avec jsfiddle mais pas ici -->
+<!-- cet exemple fonctionne avec jsfiddle mais pas ici ????? -->
  <!-- https://developers.google.com/chart/interactive/docs/gallery/map#loading -->
  <!-- pb -->
  <!-- http://stackoverflow.com/questions/38001708/missingkeymaperror-that-just-began-occurring-with-google-charts-displaymode -->
@@ -9,11 +9,17 @@
 <head>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
+   
+   <script async src="//jsfiddle.net/stef42530/ssexnL62/embed/"></script>
+   
+   
     <!-- google.charts.load('upcoming', {packages: ['map']}); -->
      <!-- https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings  -->
     var myMapsApiKey = 'AIzaSyBT46aHNOJDn0tHfX8bFFkdTkFq68LX8cc';
     google.charts.load('45', { packages: [ 'geochart','map'], mapsApiKey: myMapsApiKey  });
     google.charts.setOnLoadCallback(drawMap);
+   
+   
 
     function drawMap () {
       var data = new google.visualization.DataTable();
