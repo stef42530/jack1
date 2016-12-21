@@ -9,7 +9,10 @@
 <head>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
-    google.charts.load('upcoming', {packages: ['map']});
+    <!-- google.charts.load('upcoming', {packages: ['map']}); -->
+     <!-- https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings  -->
+    var myMapsApiKey = 'AIzaSyBT46aHNOJDn0tHfX8bFFkdTkFq68LX8cc';
+    google.charts.load('45', { packages: [ 'geochart','map'], mapsApiKey: myMapsApiKey  });
     google.charts.setOnLoadCallback(drawMap);
 
     function drawMap () {
