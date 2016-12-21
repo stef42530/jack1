@@ -15,16 +15,10 @@ another chart (organiza chart)
 
 <iframe width="600" height="143.5" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1pJ84l8Oou3oIPVA5xV61dCHF3tLPBlI8fc1P_FzLyIo/pubchart?oid=2107519757&amp;format=interactive"></iframe>
 
-<br/> <br/>
+ <br/> <br/>
 another chart (geochart) 
 
   <br/> <br/>chart with animation (random walk) <br/> 
- 
- <a href="https://developers.google.com/chart/interactive/docs/gallery/scatterchart">https://developers.google.com/chart/interactive/docs/gallery/scatterchart</a>
-<br/> <br/>
-and design your point <br/>
- <br/> <br/>
-<a href="https://developers.google.com/chart/interactive/docs/points">https://developers.google.com/chart/interactive/docs/points</a>
 
 <br/> <br/>
 <svg height="60" width="200">
@@ -35,43 +29,75 @@ and design your point <br/>
 A geochart is rendered within the browser using SVG or VML. Note that the geochart is not scrollable or draggable, and it's a line drawing rather than a terrain map; if you want any of that, consider a map visualization instead.
 <a href="https://developers.google.com/chart/interactive/docs/gallery/geochart">https://developers.google.com/chart/interactive/docs/gallery/geochart</a>
 <br/> <br/>
-<html>
-  <head>
-    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
-    <script type='text/javascript'>
-     google.charts.load('upcoming', {'packages': ['geochart']});
-     google.charts.setOnLoadCallback(drawMarkersMap);
+<br/> <br/>
+another chart (geochart) 
 
-      function drawMarkersMap() {
-      var data = google.visualization.arrayToDataTable([
-        ['City',   'Population', 'Area'],
-        ['Rome',      2761477,    1285.31],
-        ['Milan',     1324110,    181.76],
-        ['Naples',    959574,     117.27],
-        ['Turin',     907563,     130.17],
-        ['Palermo',   655875,     158.9],
-        ['Genoa',     607906,     243.60],
-        ['Bologna',   380181,     140.7],
-        ['Florence',  371282,     102.41],
-        ['Fiumicino', 67370,      213.44],
-        ['Anzio',     52192,      43.43],
-        ['Ciampino',  38262,      11]
-      ]);
+  <br/> <br/>chart with animation (random walk) <br/> 
+
+ <a href="https://developers.google.com/chart/interactive/docs/gallery/scatterchart">https://developers.google.com/chart/interactive/docs/gallery/scatterchart</a>
+<br/> <br/>
+and design your point <br/>
+ <br/> <br/>
+<a href="https://developers.google.com/chart/interactive/docs/points">https://developers.google.com/chart/interactive/docs/points</a>
+
+<head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number');
+      data.addColumn('number');
+
+      var radius = 100;
+      for (var i = 0; i < 6.28; i += 0.1) {
+        data.addRow([radius * Math.cos(i), radius * Math.sin(i)]);
+      }
+
+      // Our central point, which will jiggle.
+      data.addRow([0, 0]);
 
       var options = {
-        region: 'IT',
-        displayMode: 'markers',
-        colorAxis: {colors: ['green', 'blue']}
+        legend: 'none',
+        colors: ['#087037'],
+        pointShape: 'star',
+        pointSize: 18,
+        animation: {
+          duration: 200,
+          easing: 'inAndOut',
+        }
       };
 
-      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      var chart = new google.visualization.ScatterChart(document.getElementById('animatedshapes_div'));
+
+      // Start the animation by listening to the first 'ready' event.
+      google.visualization.events.addOneTimeListener(chart, 'ready', randomWalk);
+
+      // Control all other animations by listening to the 'animationfinish' event.
+      google.visualization.events.addListener(chart, 'animationfinish', randomWalk);
+
       chart.draw(data, options);
-    };
-    </script>
+
+      function randomWalk() {
+        var x = data.getValue(data.getNumberOfRows() - 1, 0);
+        var y = data.getValue(data.getNumberOfRows() - 1, 1);
+        x += 5 * (Math.random() - 0.5);
+        y += 5 * (Math.random() - 0.5);
+        if (x * x + y * y > radius * radius) {
+          // Out of bounds. Bump toward center.
+          x += Math.random() * ((x < 0) ? 5 : -5);
+          y += Math.random() * ((y < 0) ? 5 : -5);
+        }
+        data.setValue(data.getNumberOfRows() - 1, 0, x);
+        data.setValue(data.getNumberOfRows() - 1, 1, y);
+        chart.draw(data, options);
+      }
+    }
+  </script>
   </head>
   <body>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    <div id="animatedshapes_div" style="width: 500px; height: 500px;"></div>
   </body>
-</html>
-
 
