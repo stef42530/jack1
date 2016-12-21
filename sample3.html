@@ -1,12 +1,16 @@
 <html>
   <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT46aHNOJDn0tHfX8bFFkdTkFq68LX8cc&callback=initMap">
-    </script>
+    
+ <!-- http://stackoverflow.com/questions/38001708/missingkeymaperror-that-just-began-occurring-with-google-charts-displaymode -->
+    <!-- https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings -->
     
     <script type="text/javascript">
-      google.charts.load('current', {'packages': ['table', 'map', 'corechart']});
+      google.charts.load('current', {'packages': ['table', 'corechart']});
+      
+      var myMapsApiKey = 'AIzaSyBT46aHNOJDn0tHfX8bFFkdTkFq68LX8cc';
+      google.charts.load('45', { packages: [ 'geochart', 'map' ], mapsApiKey: myMapsApiKey  });
+      
       google.charts.setOnLoadCallback(initialize);
 
       function initialize() {
@@ -15,7 +19,7 @@
             'https://spreadsheets.google.com/pub?key=pCQbetd-CptF0r8qmCOlZGg');
         query.send(draw);
       }
-
+<!-- transform in https://docs.google.com/spreadsheets/d/17bnZCJqU0MGR8mRPepc3ZIXv1ly5LgcRV4-1F6GuSeA/pub  -->
       function draw(response) {
         if (response.isError()) {
           alert('Error in query');
