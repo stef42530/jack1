@@ -79,12 +79,12 @@ and design your point <br/>
       function randomWalk() {
         var x = data.getValue(data.getNumberOfRows() - 1, 0);
         var y = data.getValue(data.getNumberOfRows() - 1, 1);
-        x += 5 * (Math.random() - 0.5);
-        y += 5 * (Math.random() - 0.5);
+        x += 15 * (Math.random() - 0.5);
+        y += 15 * (Math.random() - 0.5);
         if (x * x + y * y > radius * radius) {
           // Out of bounds. Bump toward center.
-          x += Math.random() * ((x < 0) ? 5 : -5);
-          y += Math.random() * ((y < 0) ? 5 : -5);
+          x += Math.random() * ((x < 0) ? 15 : -15);
+          y += Math.random() * ((y < 0) ? 15 : -15);
         }
         data.setValue(data.getNumberOfRows() - 1, 0, x);
         data.setValue(data.getNumberOfRows() - 1, 1, y);
